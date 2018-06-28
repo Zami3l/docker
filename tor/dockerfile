@@ -1,0 +1,14 @@
+# Téléchargement du docker ArchLinux
+FROM base/archlinux
+# Mise à jour du système
+RUN yes | pacman -Syu
+# Installation de TOR et Proxychains
+RUN yes | pacman -S tor proxychains
+# Ajout le port 9050
+EXPOSE 9050
+# Ajout du SOCKS au fichier de configuration de tor (etc/tor/torrc)
+RUN echo SOCKSPort 9050 >> /etc/tor/torrc
+# Modification configuration du proxychains
+ADD proxychains.conf /etc/proxychains.conf
+# Exécution de tor
+CMD tor
