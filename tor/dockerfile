@@ -2,13 +2,11 @@
 FROM base/archlinux
 # Mise à jour du système
 RUN yes | pacman -Syu
-# Installation de TOR et Proxychains
-RUN yes | pacman -S tor proxychains
-# Ajout le port 9050
+# Installation de TOR
+RUN yes | pacman -S tor
+# Ajout du port 9050
 EXPOSE 9050
 # Ajout du SOCKS au fichier de configuration de tor (etc/tor/torrc)
-RUN echo SOCKSPort 9050 >> /etc/tor/torrc
-# Modification configuration du proxychains
-ADD proxychains.conf /etc/proxychains.conf
+RUN echo SOCKSPort 0.0.0.0:9050 >> /etc/tor/torrc
 # Exécution de tor
 CMD tor
