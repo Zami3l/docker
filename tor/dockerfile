@@ -1,12 +1,16 @@
-# Téléchargement du docker ArchLinux
-FROM base/archlinux
-# Mise à jour du système
-RUN yes | pacman -Syu
+# Telechargement d'Alpine Linux
+FROM alpine
+# Mise a jour du systeme
+RUN apk update && apk upgrade
 # Installation de TOR
-RUN yes | pacman -S tor
+RUN apk add tor
 # Ajout du port 9050
 EXPOSE 9050
-# Ajout du SOCKS au fichier de configuration de tor (etc/tor/torrc)
-RUN echo SOCKSPort 0.0.0.0:9050 >> /etc/tor/torrc
-# Exécution de tor
+# Configuration du fichier /etc/tor/torrc
+RUN sed -i 's/#SOCKSPort 9050/SOCKSPort 0.0.0.0:9050/g' /etc/tor/torrc.sample
+# Renommage du fichier
+RUN mv /etc/tor/torrc.sample /etc/tor/torrc
+# Changement de proprietaire
+RUN chown root /var/lib/tor
+# Execution de tor
 CMD tor
