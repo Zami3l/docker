@@ -1,0 +1,13 @@
+version: '2.0'
+
+services:
+    portainer:
+        image: portainer/portainer
+        restart: always
+        privileged: true
+        container_name: "Superviseur"
+        ports:
+            - "80:9000"
+        volumes:
+            - <Emplacement Local>:/var/run/docker.sock
+            - <Emplacement Local>:/data
