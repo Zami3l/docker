@@ -1,0 +1,19 @@
+version: '2.0'
+
+services:
+    portainer:
+        image: microsoft/mssql-server-linux:2017-latest
+        container_name: "Sql_Server"
+        environment:
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Developer"
+            SA_PASSWORD: "<Mot de passe>"
+        ports:
+            - "1433:1433"
+        networks: 
+            network:
+                aliases:
+                    - sql.server
+networks: 
+    network:
+        driver: bridge
