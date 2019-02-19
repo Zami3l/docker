@@ -10,6 +10,8 @@ services:
             SA_PASSWORD: "<Mot de passe>"
         ports:
             - "1433:1433"
+        volumes:
+            - <Emplacement Local>:/var/opt/mssql
         networks: 
             network:
                 aliases:
