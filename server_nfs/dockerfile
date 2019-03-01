@@ -1,0 +1,21 @@
+FROM alpine
+
+RUN apk update
+
+RUN apk add nfs-utils
+
+EXPOSE $PORT
+
+# Création du dossier
+RUN mkdir -p $FOLDER_PARTAGE
+
+# On monte le dossier dans un dossier de partage
+RUN mount --bind /partage $FOLDER_PARTAGE
+
+# On ajoute l'autorisation
+RUN rm /etc/exports && echo '/partage *(rw,no_subtree_check,all_squash,anonuid=99,anongid=99)' >> /etc/exports
+
+# On change le propriétaire
+RUN chown -R nobody.nobody /partage
+
+CMD nfs
