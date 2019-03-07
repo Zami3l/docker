@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+    ftp_server:
+        privileged: true
+        build:
+            context: .
+            args:
+                FOLDER_PARTAGE: "/test"
+                PORT: "21"
+        container_name: "FTP_Server"
+        ports:
+            - "21:21"
+        volumes:
+            - /home/zamiel/Test:/test
