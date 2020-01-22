@@ -13,5 +13,17 @@ services:
              - "5432:5432"
         volumes:
             - <Emplacement Local>:/var/lib/postgresql/data
+        network_mode: host
 
-            
+    web:
+        image: dpage/pgadmin4
+        container_name: "Web_Postgresql"
+        restart: always
+        environment: 
+            PGADMIN_DEFAULT_EMAIL: "<Email>"
+            PGADMIN_DEFAULT_PASSWORD: "<Mot de passe>"
+        ports:
+            - "1080:80"
+        volumes:
+            - <Emplacement Local>:/var/lib/pgadmin
+        network_mode: host
