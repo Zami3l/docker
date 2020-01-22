@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+    db:
+        image: postgres
+        container_name: "Postgres"
+        restart: always
+        environment:
+            POSTGRES_USER: "<Nom Super Utilisateur>"
+            POSTGRES_PASSWORD: "<Mot de passe>"
+            POSTGRES_DB: "<Nom de la base de donnée>"
+        ports:
+             - "5432:5432"
+        volumes:
+            - <Emplacement Local>:/var/lib/postgresql/data
+
+            
