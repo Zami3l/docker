@@ -1,0 +1,29 @@
+FROM archlinux
+
+########################
+######### INIT #########
+########################
+
+# UPDATE And ADD dependence
+RUN pacman -Syyu --noconfirm glibc git wget man vim gzip sudo base-devel tmux
+
+# PATH
+ARG PATH_INSTALL='/downloads'
+ARG PATH_SCRIPTS='/scripts'
+ARG PATH_BIN='/usr/bin'
+ARG PATH_ROOT='/root'
+ARG PATH_BUILD='/home/build'
+
+# CREATE user build for using packages AUR
+RUN useradd -m build && \
+    echo 'build ALL=NOPASSWD: ALL' >> /etc/sudoers
+
+# ADD yay
+RUN sudo -u build git clone --depth=1 https://aur.archlinux.org/yay.git ${PATH_BUILD}/yay && \
+    cd ${PATH_BUILD}/yay && \
+    sudo -u build makepkg -si --noconfirm && \
+    yay -Syy
+
+# ADD fr_FR for locale
+RUN echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
+    locale-gen fr_FR.UTF-8
