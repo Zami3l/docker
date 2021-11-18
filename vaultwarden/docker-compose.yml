@@ -1,0 +1,16 @@
+
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      ADMIN_TOKEN: '<openssl rand -base64 48>'
+      ROCKET_TLS: '{certs = "/ssl/vaultwarden.crt", key = "/ssl/vaultwarden.key"}'
+    ports:
+      - "9444:80"
+    volumes:
+      - <local_storage>:/data
+      - <local_storage>:/ssl
