@@ -1,13 +1,16 @@
-version: '2.0'
+version: '3'
 
 services:
     portainer:
-        image: portainer/portainer
+        image: portainer/portainer-ce:latest
         restart: always
         privileged: true
-        container_name: "Superviseur"
+        container_name: "portainer"
         ports:
-            - "80:9000"
+            - "8000:8000"
+            - "9443:9443"
         volumes:
             - <Emplacement Local>:/var/run/docker.sock
             - <Emplacement Local>:/data
+            - <Emplacement Local>:/certs
+        command: --sslcert /certs/portainer.crt --sslkey /certs/portainer.key
